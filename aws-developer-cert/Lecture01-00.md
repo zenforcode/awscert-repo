@@ -7,17 +7,18 @@ Think of AWS as a programmable data center. Once upon a time, if you wanted to l
 
 With infrastructure-as-a-service (IaaS) provided by AWS, all that can be done in a matter of seconds, with a few clicks or lines of code, freeing you up to focus on delivering value for your users. You can provision virtual servers on demand in minutes and pay only for the compute capacity you use. This ability to tailor capacity and compute costs to demand makes AWS a truly elastic service that can meet your needs however they may vary. Not only that, but AWS operates many data centers worldwide, configured to offer redundancy and high availability, improving the uptime and user experience of your data and services.
 
-In this chapter, you are introduced to AWS and shown how to make your first service calls to build and manage resources. We’ll then dive into the infrastructure behind AWS, and you’ll learn how to manage the credentials and permissions that you need to securely access these powerful cloud capabilities.
+In this lecture. you are introduced to AWS and shown how to make your first service calls to build and manage resources. We’ll then dive into the infrastructure behind AWS, and you’ll learn how to manage the credentials and permissions that you need to securely access these powerful cloud capabilities.
 
 ### Getting Started with an AWS Account
 
-The AWS Certified Developer – Associate is designed for developers who have hands-on experience working with AWS services. To help you prepare, this book has recommended exercises at the end of each chapter.
+The AWS Certified Developer – Associate is designed for developers who have hands-on experience working with AWS services. To help you prepare, this book has recommended exercises at the end of each lecture.
 
 To work with AWS, you’ll need an account. While you must provide contact and payment information to sign up for an account, you can test many of these services through the AWS Free Tier. The AWS Free Tier limits allow you to become familiar with the APIs for the included services without incurring charges.
 
 The AWS Free Tier automatically provides usage alerts to help you stay in control of usage and identify possible charges. You can define additional alerts with AWS Budgets. To best take advantage of the AWS Free Tier and reduce costs, take some time to review the AWS Free Tier limits and make sure to shut down or delete resources when you are done using them.
 
 To create an account, sign up at aws.amazon.com/free.
+
 ### AWS Management Console
 
 After you have created an account, you will be prompted to sign in to the AWS Management Console. As part of the sign-up process, you define an email address and password to sign in to the AWS Management Console as the root user for the account.
@@ -27,7 +28,6 @@ The AWS Management Console is a web interface where you can create, configure, a
 Sign in to the AWS Management Console, as shown in Figure 1.1, at http://signin.aws.amazon.com/console.
 A screenshot of the AWS console Home dashboard, displaying recently visited services, application management, and cost and usage details. Key sections include AWS health notifications and a summary of current and forecasted costs.
 
-FIGURE 1.1 AWS Management Console
 
 Because all the functionality of AWS is exposed through APIs, AWS provides more than just the web interface for managing resources. For example, the AWS Management Console is also available as a mobile app for iOS and for Android.
 
@@ -153,18 +153,11 @@ This Python code example uses boto and Polly to generate an audio clip that says
 ```python
 import boto3
 
- 
-
 #Explicit Client Configuration
-
 polly = boto3.client('polly',
-
     region_name='us-west-2',
-
     aws_access_key_id='AKIAIO5FODNN7EXAMPLE',
-
     aws_secret_access_key='ABCDEF+c2L7yXeGvUyrPgYsDnWRRC1AYEXAMPLE'
-
     )
 result = polly.synthesize_speech(Text='Hello World!',
 
@@ -178,11 +171,8 @@ with open("helloworld.mp3","wb") as file:
 ```
 
 Behind the scenes, boto maps the SDK function call to an HTTPS request to an Amazon Polly API endpoint that is determined by the region name (region_name) parameter.
-
 The SDK also adds authorization information to your request by signing the request using a key derived from the AWS secret access key.
-
 When your request is received at the Amazon Polly API endpoint, AWS authenticates the signature and evaluates IAM policies to authorize the API action.
-
 If authorization succeeds, Amazon Polly processes the request, generates an MP3 audio file, and then returns it to the SDK client as part of the response to the HTTPS request, as shown in Figure 1.4.
 A flowchart illustrating the steps for synthesizing speech using Amazon Polly. It includes code input, SDK requests, AWS authentication, and audio generation responses.
 
@@ -247,7 +237,7 @@ In fact, many AWS services automatically replicate data across multiple AZs with
 In the AWS Management Console, you select from a drop-down list to specify your current region. Because so many AWS resources are region-specific, always pay attention to this selection! More than one new AWS developer has been shocked to find their existing resources gone, only to realize they have selected the wrong region.
 A diagram showing the AWS cloud structure with two regions, each containing multiple availability zones (AZ). Lines connect the AZs within and between regions, indicating their relationship.
 
-FIGURE 1.6 Regions and availability zones
+![Regions and availability zones](./assets/aws-sites.png)
 Identifying AWS Regions
 
 When working with AWS Cloud services, the AWS Management Console refers to regions differently from the parameters used in the AWS CLI and SDK. Table 1.1 displays several region names and the corresponding parameters for the AWS CLI and SDK.
@@ -282,10 +272,10 @@ You have already seen how to create an IAM user to avoid making calls with the r
 To manage authentication and authorization, IAM provides users, groups, and roles. IAM authorizes each request to AWS by evaluating the policies associated with the identity and resources affected by the request. This section reviews users, groups, roles, and policies.
 Users
 
-IAM user accounts allow you to provision access to other users in your account, assigning credentials to allow AWS Management Console access, programmatic access, or both, as shown in Figure 1.7.
+IAM user accounts allow you to provision access to other users in your account, assigning credentials to allow AWS Management Console access, programmatic access, or both.
 A diagram showing an IAM user named carla with long-term security credentials. Includes AWS management console access and programmatic access details.
 
-FIGURE 1.7 IAM user long-term credentials
+[IAM user long-term credentials](./assets/iam-long-termcred.png)
 AWS Management Console Access
 
 To sign in to the web console, IAM users authenticate with an IAM username and password. When logging in, they provide either the account ID or alias so that IAM usernames only need to be unique within your account. If multifactor authentication (MFA) is enabled for an IAM user, they must also provide their MFA code when they attempt to sign in.
@@ -469,7 +459,7 @@ If the application needs permission to upload (or delete) a custom lexicon, use 
 
       ]
 
-    }i
+    }
 
   ]
 
