@@ -25,16 +25,20 @@ After you have created an account, you will be prompted to sign in to the AWS Ma
 
 The AWS Management Console is a web interface where you can create, configure, and monitor AWS resources in your account and explore the functionality of AWS’s many services. The console also summarizes your overall monthly spend and provides links to learning materials to help you get started.
 
-Sign in to the AWS Management Console, as shown in Figure 1.1, at http://signin.aws.amazon.com/console.
+Sign in to the AWS Management Console at http://signin.aws.amazon.com/console.
+
+![AWS Management Console Sign-in](./assets/fig11.png)
+
 A screenshot of the AWS console Home dashboard, displaying recently visited services, application management, and cost and usage details. Key sections include AWS health notifications and a summary of current and forecasted costs.
 
 
 Because all the functionality of AWS is exposed through APIs, AWS provides more than just the web interface for managing resources. For example, the AWS Management Console is also available as a mobile app for iOS and for Android.
 
-After you become familiar with a service, you can manage AWS resources programmatically through either the AWS Command-Line Interface (AWS CLI) or the AWS Software Development Kits (AWS SDKs), as shown in Figure 1.2.
+After you become familiar with a service, you can manage AWS resources programmatically through either the AWS Command-Line Interface (AWS CLI) or the AWS Software Development Kits (AWS SDKs), as shown below.
 A diagram illustrating the connections between AWS Management Console, AWS CLI, AWS SDK, and AWS resources. Each tool serves as an interface to access and manage AWS resources.
 
-FIGURE 1.2 Options for managing AWS resources
+![Options for managing AWS resources](./assets/fig12.png)
+
 
 ### AWS Software Development Kits
 
@@ -131,10 +135,7 @@ aws configure --profile developer
 You will be prompted for the configuration values again. From then on, you may append --profile developer to any AWS CLI command to run it as this alternate user.
 ### Using Cloud Shell to Avoid Managing Credentials
 
-AWS provides Cloud Shell, which is another way to get easy CLI access for any user. Log in to the AWS Management Console and locate this button on the toolbar, as shown in Figure 1.3.
-An icon of a play button within a square, featuring a stylized arrow.
-
-FIGURE 1.3 Cloud Shell button
+AWS provides Cloud Shell, which is another way to get easy CLI access for any user. Log in to the AWS Management Console and locate this button on the toolbar. An icon of a play button within a square, featuring a stylized arrow.
 
 Clicking this button will launch a terminal window in your web browser. This ephemeral environment has no long-term persistent storage, but it comes with the CLI preinstalled and configured for the currently logged-in user. Cloud Shell is a great way to quickly run CLI scripts from any machine without the need to set up a local environment or handle (or even generate) credentials, making it a convenient and secure option.
 Using the CLI
@@ -146,6 +147,7 @@ The CLI is just one way to invoke AWS commands. In this section, you’ll use bo
 
 
 Locate the API reference documentation about the underlying web services and programming language–specific documentation for each SDK at http://aws.amazon.com/documentation.
+
 ### SDK Example: Hello World
 
 The following example makes a request to Amazon Polly. Polly provides text-to-speech services, and it’s simple enough to make a great first SDK example.
@@ -176,7 +178,7 @@ When your request is received at the Amazon Polly API endpoint, AWS authenticate
 If authorization succeeds, Amazon Polly processes the request, generates an MP3 audio file, and then returns it to the SDK client as part of the response to the HTTPS request, as shown in Figure 1.4.
 A flowchart illustrating the steps for synthesizing speech using Amazon Polly. It includes code input, SDK requests, AWS authentication, and audio generation responses.
 
-FIGURE 1.4 API request and authorization
+![API request and authorization](./assets/api-request.png)
 
 While it’s worth understanding that behind each boto call is an HTTP request to the AWS API, it is not essential to understand. When coding, most developers interact with AWS via an SDK or the CLI and rarely interface directly with the behind-the-scenes API.
 
