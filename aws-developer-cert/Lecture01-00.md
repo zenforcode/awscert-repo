@@ -263,13 +263,16 @@ Choosing a Region
 One factor for choosing an AWS region is the availability of the services required by your application. Other aspects to consider when choosing a region are latency, price, and data residency. Table 1.2 contains selection criteria to include when choosing an AWS region.
 
 TABLE 1.2 Selecting an AWS region
-Selection criteria	Description
-Service availability	Choose a region that has all or most of the services you intend to use. Each region exposes its own AWS Cloud service endpoints, and not all AWS Cloud services are available in all regions.
-Proximity and latency	Choose a region closer to application users, on-premises servers, or your other workloads. This allows you to decrease the latency of API calls.
-Data residency	Choose a region that allows you to stay compliant with regulatory or contractual requirements to store data within a specific geographic region.
-Business continuity	Choose a pair of regions based on any specific requirements regarding data replication for disaster recovery. For example, you may select a second AWS region as a target for replicating data based on its distance from the primary AWS region.
-Price	AWS service prices are set per region. Consider cost when service availability and latency are similar between candidate regions.
-Identity and Access Management
+
+| **Selection Criteria**   | **Description** |
+|--------------------------|-----------------|
+| **Service availability** | Choose a region that has all or most of the services you intend to use. Each region exposes its own AWS Cloud service endpoints, and not all AWS Cloud services are available in all regions. |
+| **Proximity and latency** | Choose a region closer to application users, on-premises servers, or your other workloads. This allows you to decrease the latency of API calls. |
+| **Data residency**       | Choose a region that allows you to stay compliant with regulatory or contractual requirements to store data within a specific geographic region. |
+| **Business continuity**  | Choose a pair of regions based on any specific requirements regarding data replication for disaster recovery. For example, you may select a second AWS region as a target for replicating data based on its distance from the primary AWS region. |
+| **Price**                | AWS service prices are set per region. Consider cost when service availability and latency are similar between candidate regions. |
+
+
 
 You have already seen how to create an IAM user to avoid making calls with the root user and its credentials and how to obtain and configure its security credentials. Now, let’s take a closer look at the IAM service and how it gives you powerful controls for handling who can use your account and how.
 
@@ -306,7 +309,8 @@ For example, all developers working on a specific project could each have their 
 An individual IAM user can be a member of many IAM groups, and each IAM group can have many IAM users associated with the group (see Figure 1.8). IAM users within an IAM group inherit permissions from the policies attached to their group, plus any permissions from policies that are associated directly with that IAM user.
 A flowchart depicting IAM groups and users. It shows the groups developers and devtools connected to users Carla, Jan, and Takumi.
 
-FIGURE 1.8 IAM groups and IAM users
+
+[FIGURE 1.8 IAM groups and IAM users](./assets/iam-group.png)
 
 In the example shown in Figure 1.8, carla inherits permissions from the IAM user carla and from the group developers, and takumi inherits the union of all policies from developers and from devtools, in addition to any policies directly associated with takumi.
 
@@ -325,7 +329,7 @@ A diagram showing IAM Roles with a hard hat icon labeled auditors connected to a
 FIGURE 1.9 IAM roles
 
 This example trust policy allows Amazon EC2 to request short-term credentials associated with an IAM role:
-
+```json
 {
 
  "Version": "2012-10-17",
@@ -349,6 +353,7 @@ This example trust policy allows Amazon EC2 to request short-term credentials as
  ]
 
 }
+```
 
 When a principal assumes a role, AWS provides new short-term security credentials that are valid for a time-limited session through the AWS Security Token (AWS STS) service. These credentials are composed of an access key ID, secret access key, and, additionally, a session token with a known expiration date.
 
