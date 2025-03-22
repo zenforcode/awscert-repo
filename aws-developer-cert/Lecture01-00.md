@@ -828,33 +828,33 @@ In this exercise, you’ll define a limited user for the account and configure a
         Only in the availability zone in which their identity resides
         Only in the edge location in which their identity resides
         Across multiple AWS regions
-    You have provisioned a user with the managed policy AmazonS3FullAccess. A new feature has been added to the S3 API. What steps do you need to take to ensure that the user has access to use this new feature?
-        Go to the IAM console, find the AmazonS3FullAccess policy, and click Update.
-        Remove and reattach the AmazonS3FullAccess policy from the user.
-        Copy the text of the AmazonS3FullAccess policy and use it to create a custom policy with the new permissions.
-        Do nothing; AWS updates managed policies automatically when services are updated.
-## You have an on-premises application that needs to sample data from all your Amazon DynamoDB tables. You have defined an IAM user for your application called TableAuditor. How can you give the TableAuditor user read access to new DynamoDB tables as soon as they are created in your account?
-        Define a custom IAM policy that lists each DynamoDB table. Revoke the access key, and issue a new access key for TableAuditor when tables are created.
-        Create an IAM user and attach one custom IAM policy per AWS region that has DynamoDB tables.
-        Add the TableAuditor user to the IAM role DynamoDBReadOnlyAccess.
-        Attach the AWS managed IAM policy AmazonDynamoDBReadOnlyAccess to the TableAuditor user.
+### You have provisioned a user with the managed policy AmazonS3FullAccess. A new feature has been added to the S3 API. What steps do you need to take to ensure that the user has access to use this new feature?
+        - Go to the IAM console, find the AmazonS3FullAccess policy, and click Update.
+        - Remove and reattach the AmazonS3FullAccess policy from the user.
+        - Copy the text of the AmazonS3FullAccess policy and use it to create a custom policy with the new permissions.
+        - Do nothing; AWS updates managed policies automatically when services are updated.
+### You have an on-premises application that needs to sample data from all your Amazon DynamoDB tables. You have defined an IAM user for your application called TableAuditor. How can you give the TableAuditor user read access to new DynamoDB tables as soon as they are created in your account?
+        - Define a custom IAM policy that lists each DynamoDB table. Revoke the access key, and issue a new access key for TableAuditor when tables are created.
+        - Create an IAM user and attach one custom IAM policy per AWS region that has DynamoDB tables.
+        - Add the TableAuditor user to the IAM role DynamoDBReadOnlyAccess.
+        - Attach the AWS managed IAM policy AmazonDynamoDBReadOnlyAccess to the TableAuditor user.
     The principals who have access to assume an IAM role are defined in which document?
-        IAM access policy
-        IAM trust policy
-        MS grant token
-        AWS credentials file
+        -IAM access policy
+        -IAM trust policy
+        - MS grant token
+        - AWS credentials file
 ### A new developer has joined your small team. You would like to help your team member set up a development computer for access to the team account quickly and securely. How do you proceed?
-        Generate an access key based on your IAM user, and share it with your team member.
-        Create a new directory with AWS Directory Service, and assign permissions in the AWS Key Management Service (AWS KMS).
-        Create an IAM user, add it to an IAM group that has the appropriate permissions, and generate a long-term access key.
-        Create a new IAM role for this team member, assign permissions to the role, and generate a long-term access key.
+        - Generate an access key based on your IAM user, and share it with your team member.
+        - Create a new directory with AWS Directory Service, and assign permissions in the AWS Key Management Service (AWS KMS).
+        - Create an IAM user, add it to an IAM group that has the appropriate permissions, and generate a long-term access key.
+        - Create a new IAM role for this team member, assign permissions to the role, and generate a long-term access key.
 ### You have developed an app that interacts with Amazon S3 using the Python SDK on a Linux server. You are now building a new application in C#, which will run on a separate Windows Server. What is the most straightforward way to enable your new application to work with S3?
-        Rewrite your existing Python application in .NET to ensure compatibility with the Windows Server environment.
-        Go to the Amazon S3 service, and change the supported languages to include .NET.
-        Install the AWS SDK for .NET on your Windows Server.
-        Implement a proxy service that accepts your API requests, and translate them to Python.
+        - Rewrite your existing Python application in .NET to ensure compatibility with the Windows Server environment.
+        - Go to the Amazon S3 service, and change the supported languages to include .NET.
+        - Install the AWS SDK for .NET on your Windows Server.
+        - Implement a proxy service that accepts your API requests, and translate them to Python.
 ### You work for a Virginia-based company, and you have been asked to implement a custom application exclusively for customers in Australia. This application has no dependencies on any of your existing applications. What is a method you use to keep the customer latency to this new application low?
-        Set up an AWS Direct Connect (DX) between your on-premises environment and US East (N Virginia), and host the application from your own data center in Virginia.
-        Create all resources for this application in the Asia Pacific (Sydney) region, and manage them from your current account.
-        Deploy the application to the US East (N Virginia) region, and select Amazon EC2 instances with enhanced networking.
-        It does not matter which region you select, because all resources are automatically replicated globally.
+        - Set up an AWS Direct Connect (DX) between your on-premises environment and US East (N Virginia), and host the application from your own data center in Virginia.
+        - Create all resources for this application in the Asia Pacific (Sydney) region, and manage them from your current account.
+        - Deploy the application to the US East (N Virginia) region, and select Amazon EC2 instances with enhanced networking.
+        - It does not matter which region you select, because all resources are automatically replicated globally.
