@@ -231,31 +231,18 @@ TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metad
 # Use the token to retrieve instance metadata
 ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
 http://169.254.169.254/latest/meta-data/instance-id)
-
 TYPE=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
 http://169.254.169.254/latest/meta-data/instance-type)
-
 AZ=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
 http://169.254.169.254/latest/meta-data/placement/availability-zone)
-
 IPV4=$(curl -f -H "X-aws-ec2-metadata-token: $TOKEN" \
 http://169.254.169.254/latest/meta-data/public-ipv4)
 
- 
-# Set up the Web Site
-
+ # Set up the Web Site
 cd /var/www/html
-
- 
-
 ## Make AWS Cloud API calls to generate an audio file
-
 VOICE="Matthew"
-
 aws polly synthesize-speech --region us-west-2 --voice-id $VOICE --text "Hello from EC2 instance $ID." --output-format mp3 --engine neural instance.mp3
-
- 
-
 ## Generate customized index.html for this instance
 echo "<html><body><H1>Welcome to your EC2 Instance</H1><p><p>"> ./index.html
 echo "<audio controls>">> ./index.html
@@ -289,17 +276,32 @@ Connecting to Other Networks
 
 By default, an Amazon VPC is an isolated network. Instances within an Amazon VPC cannot communicate with the Internet or other networks until you explicitly create connections. Table 2.2 provides an overview of various types of connections that you can establish be-tween an Amazon VPC and other networks.
 
-TABLE 2.2 Amazon VPC connection types
-Connection type	Description
-Internet Gateway	A highly available connection that allows outbound and inbound requests to the internet from your Amazon VPC
-Egress Only Internet Gateway	A special type of internet gateway for IPv6 that allows outbound traffic and corresponding responses but blocks inbound connections
-Virtual Private Gateway	Allows you to establish a private connection to your corporate network by using a VPN connection or through Direct Connect (DX)
-Amazon VPC Endpoints	Allows traffic from your Amazon VPC to go to specific AWS services or third-party SaaS services without traversing an Internet gateway
-Amazon VPC Peering	Privately routes traffic from one Amazon VPC to another Amazon VPC by establishing a peer relationship between this VPC and another VPC
-AWS Transit Gateway	Allows you to centrally manage connectivity between many VPCs and an on-premises environment using a single gateway
-AWS VPN Cloudhub	Connects multiple remote networks to a central location in AWS using a hub-and-spoke model
-AWS Privatelink	Allows private connections from your VPC to AWS services, such as S3, many of which otherwise require outbound internet access
-A diagram of a virtual private cloud (VPC) labeled example VPC with an IP range of 10.0.0.0/16. It includes three availability zones labeled A, B, and C within the VPC structure.
+# Table 2.2: Amazon VPC Connection Types
+
+| **Connection Type**             | **Description**                                                                                                                                     |
+|----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| Internet Gateway                 | A highly available connection that allows outbound and inbound requests to the internet from your Amazon VPC                                       |
+| Egress Only Internet Gateway     | A special type of internet gateway for IPv6 that allows outbound traffic and corresponding responses but blocks inbound connections                |
+| Virtual Private Gateway          | Allows you to establish a private connection to your corporate network by using a VPN connection or through Direct Connect (DX)                    |
+| Amazon VPC Endpoints             | Allows traffic from your Amazon VPC to go to specific AWS services or third-party SaaS services without traversing an Internet gateway             |
+| Amazon VPC Peering               | Privately routes traffic from one Amazon VPC to another Amazon VPC by establishing a peer relationship between this VPC and another VPC            |
+| AWS Transit Gateway              | Allows you to centrally manage connectivity between many VPCs and an on-premises environment using a single gateway                                |
+| AWS VPN Cloudhub                 | Connects multiple remote networks to a central location in AWS using a hub-and-spoke model                                                         |
+| AWS PrivateLink                  | Allows private connections from your VPC to AWS services, such as S3, many of which otherwise require outbound internet access                    |
+
+---
+
+## Example VPC Diagram Description
+
+- **VPC Name**: Example VPC  
+- **CIDR Block**: 10.0.0.0/16  
+- **Availability Zones**:
+  - **Zone A**
+  - **Zone B**
+  - **Zone C**
+
+Each Availability Zone contains resources (e.g., subnets, instances), all within the same VPC and IP range. This setup helps distribute resources across zones for high availability and fault tolerance.
+
 
 ![FIGURE 2.10 Amazon VPC overview](./assets/fig210.png)
 
