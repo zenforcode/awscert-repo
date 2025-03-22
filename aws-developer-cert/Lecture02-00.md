@@ -312,7 +312,7 @@ A diagram of a virtual private cloud (VPC) setup. Shows connections to an intern
 
 When working with Amazon VPC, all instances placed within a particular VPC are assigned one or more IP addresses. Several types of IP addresses are available for use with Amazon VPC.
 
-Private IP Addresses
+### Private IP Addresses
 
 Private IP addresses are IPv4 addresses that are not reachable from the Internet. These addresses are unique within a VPC and used for traffic that is to be routed internally within the VPC, for private communication with connected networks, or for private communication with other VPCs.
 
@@ -321,8 +321,8 @@ Public IP Addresses
 
 Whether an EC2 instance is assigned public IP addresses automatically, in addition to the private IP address, depends on the following factors:
 
-    Whether the “public IP” configuration is checked when launching the instance
-    Whether the subnet in which that instance is launched is configured to provide public IPs for all instances
+- Whether the “public IP” configuration is checked when launching the instance
+- Whether the subnet in which that instance is launched is configured to provide public IPs for all instances
 
 Unlike the private IP address, the public IP address is an IPv4 address that is reachable from the Internet.
 
@@ -335,7 +335,7 @@ You may also assign Elastic IP addresses to infrastructure such as NAT gateways.
 IPv6 Addresses
 
 In addition to IPv4 addresses, you can associate an Amazon-provided block of IPv6 addresses to your VPC. When you enable IPv6 in your VPC, the network operates in dual-stack mode, meaning that IPv4 and IPv6 commutations are independent of each other. Your resources can communicate over IPv4, IPv6, or both.
-Subnets
+### Subnets
 
 Within an Amazon VPC, you define one or more subnets. A subnet is associated with a specific availability zone within the region containing the VPC. Each subnet has its own block of private IP addresses defined using CIDR notation. This block is a subset of the overall IP address range assigned to the VPC and does not overlap with any other subnet in the same VPC.
 
@@ -350,8 +350,7 @@ The second type of configuration is usually a subnet that backend instances use 
 For an example of an Amazon VPC with a public and a private subnet, see Figure 2.12.
 A diagram of an example VPC with IP range 10.0.0.0/16, featuring two public subnets. It includes instances with private and public IPs, connected to an internet gateway for external access.
 
-
-FIGURE 2.12 Amazon VPC with public and private subnets
+![FIGURE 2.12 Amazon VPC with public and private subnets](./assets/fig212.png)
 
 In addition to Amazon EC2 instances, many AWS managed services, such as Amazon Relational Database Service (Amazon RDS) or Amazon ElastiCache, also enable you to expose your resources in specific subnets, including private subnets. You can create these resources and access them privately from instances within your Amazon VPC.
 Route Tables
@@ -380,7 +379,8 @@ When you launch an EC2 instance into a public subnet, be sure to assign a public
 To review a diagram of an Amazon VPC that has a public and a private subnet configured with the route table rules, see Figure 2.13.
 A diagram of an example VPC with a public subnet and private subnet in availability zone A. Includes public route table and main route table with specific destinations and targets.
 
-FIGURE 2.13 Amazon VPC with public and private subnets with rules
+![FIGURE 2.13 Amazon VPC with public and private subnets](./assets/fig213.png)
+
 Security Groups
 
 Security groups act as a stateful firewall for resources in your AWS account, from EC2 instances to RDS databases to application load balancers. When you define security group rules, you specify the source or destination of the network traffic along with the protocols and ports that you allow from those sources.
