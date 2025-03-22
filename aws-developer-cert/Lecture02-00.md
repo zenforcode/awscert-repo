@@ -596,7 +596,7 @@ In this exercise, you’ll create a virtual private cloud (VPC). Within that Ama
 
     Private subnet ID: subnet-0e78325d9eexample
 
-EXERCISE 2.3
+### EXERCISE 2.3
 Using an IAM Role for API Calls from Amazon EC2 Instances
 
 In this exercise, you’ll create an IAM role for the web server. This role enables you to make AWS service calls from code running on the EC2 instance of the web server. To do this, you’ll create a new IAM role called devassoc-webserver.
@@ -611,7 +611,7 @@ In this exercise, you’ll create an IAM role for the web server. This role enab
         TranslateReadOnly allows policyholders to detect the dominant language in text, translate text, and list and retrieve custom terminologies.
     For Role Name, enter devassoc-webserver and then click Create Role.
 
-EXERCISE 2.4
+### EXERCISE 2.4
 Launching an Amazon EC2 Instance as a Web Server
 
 In this exercise, you’ll launch an Amazon EC2 instance as a web server and connect to it.
@@ -635,15 +635,12 @@ In this exercise, you’ll launch an Amazon EC2 instance as a web server and con
         Under Type, choose HTTP and under Source Type, choose My IP.
     Open Advanced Details and under Instance Profile, select devassoc-webserver.
     Still under Advanced Details, scroll down to User Data and then paste this script:
-
+```bash
     #!/bin/bash
-
     yum install httpd -y
-
     systemctl start httpd
-
     systemctl enable httpd
-
+```
     Note: Paste this snippet from chapter-02/server-short.txt, located in the folder in which you downloaded the sample code for this guide.
     Click Launch Instance.
     To find your instance, click the instance ID shown on the Success page.
@@ -657,7 +654,7 @@ In this exercise, you’ll launch an Amazon EC2 instance as a web server and con
 
     The page fails to load because the security group rule allows HTTP access from only a particular IP address.
 
-EXERCISE 2.5
+### EXERCISE 2.5
 Configuring NAT for Instances in the Private Subnet
 
 In this exercise, you’ll create a security group for the NAT instance. NAT allows Amazon EC2 instances in a private subnet to make web requests to the Internet, to update software packages, and to make API calls.
