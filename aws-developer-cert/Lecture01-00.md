@@ -394,99 +394,65 @@ One method of granting permissions is to use AWS managed policies. Managed polic
 When choosing permissions policies, AWS recommends that you adopt the principle of least privilege and grant someone the minimum permissions they need to complete a task.
 
 Take the example of an application that uses Amazon Polly. If the application uses only Amazon Polly to synthesize speech, use the AmazonPollyReadOnlyAccess policy, which grants permissions to Polly actions that do not store any data or modify data stored in AWS. The policy is represented as a JSON document and shown here:
-
+```json
 {
 
   "Version": "2012-10-17",
-
   "Statement": [
-
     {
 
       "Effect": "Allow",
-
       "Action": [
-
         "polly:DescribeVoices",
-
         "polly:GetLexicon",
-
         "polly:ListLexicons",
-
         "polly:SynthesizeSpeech"
-
       ],
-
       "Resource": [
-
         "*"
-
       ]
-
     }
-
   ]
+}
+```
 
 If the application needs permission to upload (or delete) a custom lexicon, use the AmazonPollyFullAccess policy. The policy is shown here. Notice that the actions granted by the policy shown here are represented as "polly:*", where the * provides access to all Polly API actions.
-
+```json
 {
-
   "Version": "2012-10-17",
-
   "Statement": [
-
     {
-
       "Effect": "Allow",
-
       "Action": [
-
         "polly:*"
-
       ],
-
       "Resource": [
-
         "*"
-
       ]
-
     }
-
   ]
-
 }
+```
 
-Writing Custom Policies
+### Writing Custom Policies
 
 AWS recommends that you use the AWS managed policies whenever possible. However, when you need more control, you can define custom policies.
-
 As shown in the earlier examples, an IAM policy is a JSON-style document composed of one or more statements. Each statement has an effect that will either allow or deny access to specific actions on AWS resources. A deny statement takes precedence over any allow statements. Use an Amazon Resource Name (ARN) to specify precisely the resource or resources to which a custom policy applies.
-
 For example, the following policy authorizes access to the DeleteLexicon action in Polly on the resource specified by the ARN. In this case, the resource is a particular lexicon within a specific account and within a specific region.
-
+```json
 {
 
  "Version": "2012-10-17",
-
  "Statement": [{
-
    "Sid": "AllowDeleteForSpecifiedLexicon",
-
    "Effect": "Allow",
-
    "Action": [
-
      "polly:DeleteLexicon"],
-
    "Resource": "arn:aws:polly:us-west-2:123456789012:lexicon/awsLexicon"
-
    }
-
   ]
-
 }
-
+```
 To allow slightly broader permissions in a similar policy, use wildcards in the ARN. For example, to allow a user to delete any lexicon within the specified region and account, replace awsLexicon with an * in the ARN, as shown here:
 
 {
@@ -797,27 +763,22 @@ In this exercise, you’ll define a limited user for the account and configure a
     https://polly.us-east-1a.amazonaws.com/v1/voices
 
     What went wrong?
-        Your credentials have been rejected.
-        You have incorrectly configured the AWS region for your call.
-        Amazon Polly does not offer a feature to describe the list of available voices.
-        Amazon Polly is not accessible from the AWS CLI because it is only in the AWS SDK.
+    - Your credentials have been rejected.
+    - You have incorrectly configured the AWS region for your call.
+    - Amazon Polly does not offer a feature to describe the list of available voices.
+    - Amazon Polly is not accessible from the AWS CLI because it is only in the AWS SDK.
     To what resource does this IAM policy grant access, and for which actions?
-
+```json
     {
-
      "Version": "2012-10-17",
-
      "Statement": {
-
      "Effect": "Allow",
-
      "Action": "s3:ListBucket",
-
      "Resource": "arn:aws:s3:::example_bucket"
-
      }
 
     }
+```
 
         The policy grants full access to read the objects in the Amazon S3 bucket.
         The policy grants the holder the permission to list the contents of the Amazon S3 bucket called example_bucket.
@@ -838,7 +799,7 @@ In this exercise, you’ll define a limited user for the account and configure a
         - Create an IAM user and attach one custom IAM policy per AWS region that has DynamoDB tables.
         - Add the TableAuditor user to the IAM role DynamoDBReadOnlyAccess.
         - Attach the AWS managed IAM policy AmazonDynamoDBReadOnlyAccess to the TableAuditor user.
-    The principals who have access to assume an IAM role are defined in which document?
+### The principals who have access to assume an IAM role are defined in which document?
         -IAM access policy
         -IAM trust policy
         - MS grant token
