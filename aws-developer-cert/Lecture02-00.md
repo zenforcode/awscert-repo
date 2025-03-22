@@ -20,7 +20,7 @@ Now that you have an AWS account and you can make API calls from your local mach
 -   VMWare Cloud
 -   Amazon app runner
 
-In this chapter, you will explore Amazon Elastic Compute Cloud (Amazon EC2), which allows you to launch virtual machines called instances. You will learn about the components of an EC2 instance and explore an example of customizing an instance to run an application. Then, to learn how to customize the network environment for your instances, you will explore the network controls of Amazon Virtual Private Cloud (VPC). Finally, you will review some of the concerns related to managing your compute and networking environments.
+In this lecture, you will explore Amazon Elastic Compute Cloud (**Amazon EC2**), which allows you to launch virtual machines called instances. You will learn about the components of an EC2 instance and explore an example of customizing an instance to run an application. Then, to learn how to customize the network environment for your instances, you will explore the network controls of Amazon Virtual Private Cloud (VPC). Finally, you will review some of the concerns related to managing your compute and networking environments.
 
 Amazon EC2 and Amazon VPC are foundational services, and many of the concepts introduced in this chapter are transferrable to working with other AWS services.
 
@@ -42,13 +42,15 @@ Instance types are also grouped into instance families to help you choose the ap
 For an overview of the different instance families and their use cases, see Table 2.1.
 
 TABLE 2.1 Amazon EC2 instance families
-Amazon EC2 instance family	For applications that require …
-General purpose	A balanced mix of CPU, RAM, and other resources
-Compute optimized	A high amount of CPU, such as high-performance web servers, scientific modeling, and video encoding
-Memory optimized	A large amount of RAM, such as in-memory databases and distributed web scale in-memory caches
-Storage optimized	A large amount of storage and input/output (I/O) throughput, such as data warehousing, analytics, and big data distributed computing
-HPC Optimized	A variety of configurations aimed at specific high-performance computing workloads
-Accelerated computing	Dedicated graphics processing unit (GPU) or field-programmable gate array (FPGA) resources, such as 3D rendering, deep learning, genomics research, and real-time video processing
+
+| **Amazon EC2 Instance Family** | **For Applications That Require …** |
+|-------------------------------|-------------------------------------|
+| **General purpose**           | A balanced mix of CPU, RAM, and other resources |
+| **Compute optimized**         | A high amount of CPU, such as high-performance web servers, scientific modeling, and video encoding |
+| **Memory optimized**          | A large amount of RAM, such as in-memory databases and distributed web scale in-memory caches |
+| **Storage optimized**         | A large amount of storage and input/output (I/O) throughput, such as data warehousing, analytics, and big data distributed computing |
+| **HPC Optimized**             | A variety of configurations aimed at specific high-performance computing workloads |
+| **Accelerated computing**     | Dedicated graphics processing unit (GPU) or field-programmable gate array (FPGA) resources, such as 3D rendering, deep learning, genomics research, and real-time video processing |
 
 Because EC2 instances are resizable, you need not worry about how to correctly provision your instance the first time, or whether your choice will be sufficient for your future needs. All you need to do to change your hardware configuration is stop the instance, modify the instance type attribute, and then start the instance again.
 Storage
@@ -58,7 +60,7 @@ Your instance requires storage volumes for both the root volume and any addition
 For an overview of the relationship between Amazon EBS volumes, instance store volumes, and the Amazon EC2 instance, see Figure 2.1.
 A diagram depicting an Amazon EC2 instance connected to Amazon EBS volumes. It shows a host computer with an instance store and the root volume labeled as vol-xxxxx.
 
-FIGURE 2.1 Amazon EC2 storage
+[Amazon EC2 storage](./assets/fig21.png)
 
 ### Persistent Storage
 
@@ -139,7 +141,9 @@ You can also terminate an instance. It first enters the shutting down state; the
 To view the life cycle of an Amazon EC2 instance, see Figure 2.3.
 A flowchart depicting the lifecycle of an amazon EC2 instance. Shows states like pending, running, stopping, and terminated, with transitions for actions like launch, stop, and reboot.
 
-FIGURE 2.3 Amazon EC2 instance life cycle
+
+[FIGURE 2.3 Amazon EC2 instance life cycle](./assets/fig23.png)
+
 Running Applications on Instances
 
 This section explores some features of EC2 that are useful when you run applications or custom-code on an instance. These include ways of customizing the software on an instance and discovering properties about the instance. An example that ties these features together is provided. Finally, we discuss how you can monitor the status of the instance.
