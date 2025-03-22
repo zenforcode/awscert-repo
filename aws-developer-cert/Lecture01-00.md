@@ -758,23 +758,23 @@ In this exercise, you’ll define a limited user for the account and configure a
 
     In this exercise, you have configured the SDK and AWS CLI to refer to a secondary credentials profile and have tested the distinction between the AWS managed IAM policies related to Amazon Polly. You have also confirmed that it is possible to change the permissions of an IAM user without changing the access key used by that user.
 
-Review Questions
+## Review Questions
 
-    Which of the following is typically used to sign API (CLI or SDK) calls to AWS services?
-        AWS KMS Key
-        AWS access key
-        IAM username and password
-        Account number
-    When you make calls to AWS services, for most services those requests are directed at a specific endpoint that corresponds to which of the following?
-        AWS facility
-        AWS availability zone
-        AWS region
-        AWS edge location
-    When you’re configuring a local development machine to make AWS calls, which of the following is the simplest secure method of obtaining and using credentials?
-        Create an IAM user, assign permissions by adding the user to an IAM group with IAM policies attached, and generate an access key for programmatic access.
-        Sign in with your email and password, and visit My Security Credentials to generate an access key.
-        Generate long-term credentials for a built-in IAM role.
-        Use your existing username and password by configuring local environment variables.
+### Which of the following is typically used to sign API (CLI or SDK) calls to AWS services?
+    - AWS KMS Key
+    - AWS access key
+    - IAM username and password
+    - Account number
+### When you make calls to AWS services, for most services those requests are directed at a specific endpoint that corresponds to which of the following?
+    - AWS facility
+    - AWS availability zone
+    - AWS region
+    - AWS edge location
+### When you’re configuring a local development machine to make AWS calls, which of the following is the simplest secure method of obtaining and using credentials?
+    - Create an IAM user, assign permissions by adding the user to an IAM group with IAM policies attached, and generate an access key for programmatic access.
+    - Sign in with your email and password, and visit My Security Credentials to generate an access key.
+    - Generate long-term credentials for a built-in IAM role.
+    - Use your existing username and password by configuring local environment variables.
     You have a large number of employees, and each employee already has an identity in an external directory. How might you manage AWS credentials for each employee so that they can interact with AWS for short-term sessions?
         Create an IAM user and credentials for each member of your organization.
         Share a single password through a file stored in an encrypted Amazon S3 bucket.
