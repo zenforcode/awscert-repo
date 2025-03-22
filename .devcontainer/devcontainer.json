@@ -10,8 +10,10 @@
       "ms-python.python",
       "ms-python.vscode-pylance"
     ],
-    "mounts": [ "source=/home/aws,target=/home/aws,type=bind,consistency=cached"],
+    "containerEnv": {
+      "AWS_ACCESS_KEY_ID": "${env:AWS_ACCESS_KEY_ID}",
+      "AWS_SECRET_ACCESS_KEY": "${env:AWS_SECRET_ACCESS_KEY}"
+    },
     "remoteUser": "vscode"
 }
-
 
