@@ -10,5 +10,8 @@
       "ms-python.python",
       "ms-python.vscode-pylance"
     ],
+    "mounts": [ "source=/home/aws,target=/home/aws,type=bind,consistency=cached"],
     "remoteUser": "vscode"
 }
+
+
