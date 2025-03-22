@@ -775,22 +775,22 @@ In this exercise, you’ll define a limited user for the account and configure a
     - Sign in with your email and password, and visit My Security Credentials to generate an access key.
     - Generate long-term credentials for a built-in IAM role.
     - Use your existing username and password by configuring local environment variables.
-    You have a large number of employees, and each employee already has an identity in an external directory. How might you manage AWS credentials for each employee so that they can interact with AWS for short-term sessions?
+### You have a large number of employees, and each employee already has an identity in an external directory. How might you manage AWS credentials for each employee so that they can interact with AWS for short-term sessions?
         Create an IAM user and credentials for each member of your organization.
         Share a single password through a file stored in an encrypted Amazon S3 bucket.
         Define a set of IAM roles, and establish a trust relationship between your directory and AWS.
         Configure the AWS Key Management Service (AWS KMS) to store credentials for each user.
-    You have a team member who needs access to write records to an existing Amazon DynamoDB table within your account. How might you grant write permission to this specific table and only this table?
-        Write a custom IAM policy that specifies the table as the resource, and attach that policy to the IAM user for the team member.
-        Attach the DynamoDBFullAccess managed policy to the IAM role used by the team member.
-        Delete the table and re-create it. Permissions are set when the DynamoDB table is created.
-        Create a new user within DynamoDB, and assign table write permissions.
-    You created a Movies DynamoDB table in the AWS Management Console, but when you try to list your DynamoDB tables by using the Java SDK, you do not see this table. Why?
-        DynamoDB tables created in the AWS Management Console are not accessible from the API.
-        Your SDK may be listing your resources from a different AWS region in which the table does not exist.
-        The security group applied to the Movies table is keeping it hidden.
-        Listing tables is supported only in C# and not in the Java SDK.
-    You make a request to describe voices offered by Amazon Polly by using the AWS CLI, and you receive the following error message:
+### You have a team member who needs access to write records to an existing Amazon DynamoDB table within your account. How might you grant write permission to this specific table and only this table?
+    - Write a custom IAM policy that specifies the table as the resource, and attach that policy to the IAM user for the team member.
+    - Attach the DynamoDBFullAccess managed policy to the IAM role used by the team member.
+    - Delete the table and re-create it. Permissions are set when the DynamoDB table is created.
+    - Create a new user within DynamoDB, and assign table write permissions.
+### You created a Movies DynamoDB table in the AWS Management Console, but when you try to list your DynamoDB tables by using the Java SDK, you do not see this table. Why?
+    - DynamoDB tables created in the AWS Management Console are not accessible from the API.
+    - Your SDK may be listing your resources from a different AWS region in which the table does not exist.
+    - The security group applied to the Movies table is keeping it hidden.
+    - Listing tables is supported only in C# and not in the Java SDK.
+### You make a request to describe voices offered by Amazon Polly by using the AWS CLI, and you receive the following error message:
 
     Could not connect to the endpoint URL:
 
