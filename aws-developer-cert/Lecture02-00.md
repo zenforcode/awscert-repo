@@ -60,7 +60,7 @@ Your instance requires storage volumes for both the root volume and any addition
 For an overview of the relationship between Amazon EBS volumes, instance store volumes, and the Amazon EC2 instance, see Figure 2.1.
 A diagram depicting an Amazon EC2 instance connected to Amazon EBS volumes. It shows a host computer with an instance store and the root volume labeled as vol-xxxxx.
 
-[Amazon EC2 storage](./assets/fig21.png)
+![Amazon EC2 storage](./assets/fig21.png)
 
 ### Persistent Storage
 
@@ -112,13 +112,14 @@ In order to connect to an instance via SSH, you must configure SSH key access wi
 An EC2 key pair consists of two files: a public key and a private key. When you launch an instance, you may choose to either create a new key pair or use an existing one already on your account to configure SSH access. AWS will associate the public key with the default login user, after which you may use the private key to SSH as that user. When creating a new key pair, AWS allows you to download the private key only once. Treat the private key like a password and keep it secure!
 
 To use SSH to connect to an Amazon Linux instance with your private key, perform the following from a Mac or Linux-based system:
-
+```bash
 chmod 400 /path/to/key
-
 ssh -i /path/to/key ec2-user@<your instance IP>
+```
 
 If you do not specify a key pair when you launch the instance, you will be unable to connect via SSH to that instance, unless you use another method to sign in and configure SSH.
-Session Manager
+
+### Session Manager
 
 Session Manager is a feature of the AWS Systems Manager service that provides a secure browser-based interface to your instances, allowing you to log in without needing to maintain SSH keys or even open inbound ports. By attaching an IAM role with the AmazonSSMManagedInstanceCore policy to your instance and making sure the Session Manager agent is running (a default installation on Amazon Linux), you can enable Session Manager and get a shell right in your browser. This tool is particularly useful for instances without public IP addresses or in private subnets, as you can avoid the need to expose the server or create other “jumpbox” instances to reach it.
 EC2 Instance Connect
@@ -142,9 +143,9 @@ To view the life cycle of an Amazon EC2 instance, see Figure 2.3.
 A flowchart depicting the lifecycle of an amazon EC2 instance. Shows states like pending, running, stopping, and terminated, with transitions for actions like launch, stop, and reboot.
 
 
-[FIGURE 2.3 Amazon EC2 instance life cycle](./assets/fig23.png)
+![FIGURE 2.3 Amazon EC2 instance life cycle](./assets/fig23.png)
 
-Running Applications on Instances
+### Running Applications on Instances
 
 This section explores some features of EC2 that are useful when you run applications or custom-code on an instance. These include ways of customizing the software on an instance and discovering properties about the instance. An example that ties these features together is provided. Finally, we discuss how you can monitor the status of the instance.
 Connecting to Amazon EC2 Instances
@@ -152,7 +153,7 @@ Connecting to Amazon EC2 Instances
 With EC2 instances, you have full administrative control to install software packages on your instance and create additional user accounts as needed. As mentioned earlier, you can directly connect to Linux instances via SSH using the private key from the Amazon EC2 key pair, as shown in Figure 2.4.
 A terminal window displaying a successful SSH connection to an Amazon Linux 2023 EC2 instance. The command prompt shows the last login information and the user’s IP address.
 
-FIGURE 2.4 Using SSH with an Amazon EC2 instance
+![FIGURE 2.4 Using SSH with an Amazon EC2 instance](./assets/fig24.png)
 
 For a Windows instance, the password for the Administrator account is encrypted with the public key. You can decrypt the password by using the associated private key, as illustrated in Figure 2.5 and Figure 2.6.
 
@@ -162,21 +163,18 @@ Customizing Software with User Data
 You can connect to your instance and install any applications you want from an interactive session. However, one of the advantages of moving to the cloud is to automate previously manual steps. Instead of logging in to the instance, another way to customize the software on your instance is to provide user data as part of the request to launch the instance. For Linux instances, user data can be a shell script or a cloud-init directive. On Windows instances (depending on the version of Windows Server), either EC2Config or EC2Launch will process the user data. By default, commands supplied to user data execute only at first boot of the instance.
 
 Here is an example of installing an Apache web server on an Amazon Linux 2 instance with a shell script that is provided as the user data:
-
+```bash
 #!/bin/bash
-
 yum update -y
-
 yum install httpd -y
-
 systemctl start httpd
-
 systemctl enable httpd
-
+```
 A screenshot of the get windows password page. Shows fields to upload or paste a private key file to decrypt the initial Windows administrator password for an instance.
 
-FIGURE 2.5 Decrypting a Windows password
-Discovering Instance Metadata
+![FIGURE 2.5 Decrypting a Windows password](./assets/fig25.png)
+
+## Discovering Instance Metadata
 
 With the instance metadata service (IMDS), code running on an Amazon EC2 instance can discover properties about that instance. The IMDS exposes a special IP address, 169.254.169.254, which you can query using HTTP to perform lookups. By first asking the metadata service for a token, then using that token to inquire about the environment, you can query a broad range of metadata attributes, as shown in Figure 2.7. These attributes can include the instance ID, AMI ID, hostname, and much more.
 
@@ -186,24 +184,27 @@ With IMDS, it also possible to retrieve the user data that was used to bootstrap
 Anyone who can access an instance can view its metadata and user data. Do not store sensitive data, such as passwords or access keys, in user data.
 A screenshot of the AWS EC2 console showing RDP client connection details. It includes the instance ID, private IP, username, and password for accessing a windows instance via remote desktop.
 
-FIGURE 2.6 Viewing a Windows password
-Obtaining AWS Credentials
+![FIGURE 2.6 Viewing a Windows password](./assets/fig26.png)
+
+## Obtaining AWS Credentials
 
 Usually, when interacting with AWS services via the CLI or various programming language SDKs like boto, you must either explicitly provide AWS credentials in the form of an access key ID and secret access key, or ensure that those values are set in environment variables. However, when calling from an EC2 instance, it is possible to connect to AWS services without any keys at all, using the instance’s associated IAM instance profile.
 
 Instance profiles are how you assign an IAM role (with its associated policies) to an instance. When you see “instance profile” as a configurable field on EC2 instances in the console or other parts of AWS, you can think “attached IAM role.” A role can be used on many instances at once, but an instance can only have one role at a time. To update the permissions on an instance, you can either update the policies attached to its role or swap the attached role at any time.
 A terminal window showing commands to retrieve EC2 instance metadata. The first command generates a token, and the second command lists metadata categories such as ami-id, hostname, and instance-id.
 
-FIGURE 2.7 Amazon EC2 metadata attributes
+![FIGURE 2.7 Viewing a Windows password](./assets/fig27.png)
+
 A Terminal window displaying a series of commands executed on an EC2 instance. It shows the installation and enabling of the HTTPD service along with a command to retrieve the AWS metadata token.
 
-FIGURE 2.8 Querying Amazon EC2 user data
+![FIGURE 2.8 Viewing a Windows password](./assets/fig28.png)
 
 When an IAM role is associated with an instance, the EC2 service makes the necessary calls to the Security Token Service automatically to generate short-term credentials for that instance that confer all the capabilities of the attached IAM role. The credentials are exposed to the instance through the Amazon EC2 metadata service, as shown in Figure 2.9.
 A diagram showing the process of an EC2 instance pulling temporary credentials via the metadata service. The EC2 service periodically refreshes role credentials with the security token service (STS).
 
-FIGURE 2.9 Instance profile and IAM role credentials
-Serving a Custom Web Page
+![FIGURE 2.8 Viewing a Windows password](./assets/fig29.png)
+
+## Serving a Custom Web Page
 
 Let’s bring this all together in a short demo. This example combines EC2 user data, the EC2 metadata service, and IAM roles to configure an instance with a static web page that shows (and tells!) information about the host.
 
@@ -256,30 +257,19 @@ aws polly synthesize-speech --region us-west-2 --voice-id $VOICE --text "Hello f
  
 
 ## Generate customized index.html for this instance
-
 echo "<html><body><H1>Welcome to your EC2 Instance</H1><p><p>"> ./index.html
-
 echo "<audio controls>">> ./index.html
-
 echo '<source src="instance.mp3" type="audio/mp3">'>> ./index.html
-
 echo 'Here is an <a href="instance.mp3"> audio greeting.</a> '>> ./index.html
-
 echo "</audio><p><p>">> ./index.html
-
 echo "There are many other instances, but">> ./index.html
-
 echo "<strong>$ID</strong> is yours.<p><p>">> ./index.html
-
 echo "This is a <strong>$TYPE</strong> instance">> ./index.html
-
 echo " in <strong>$AZ</strong>. <p><p>">> ./index.html
-
 echo "The public IP is <strong>$IPV4</strong>.<p><p>">> ./index.html
-
 echo "</body></html>">> ./index.html
-
-Monitoring Instances
+```
+## Monitoring Instances
 
 Now that you have an application running on your instance, you may be interested in understanding how that application performs, watching its resource usage, and ensuring that it stays up and running.
 
@@ -289,7 +279,8 @@ Using Amazon CloudWatch, you can automate actions based on a metric through Amaz
 Customizing the Network
 
 The out-of-the-box Amazon VPC service offers a straightforward path to launch EC2 instances, but grasping the details of how VPCs work to create software-defined networks is crucial. This section delves into the functionality of VPCs, which lets you establish virtual networks in an AWS region tailored to your computing needs.
-Amazon Virtual Private Cloud
+
+## Amazon Virtual Private Cloud
 
 Amazon Virtual Private Cloud (VPC) provides logically isolated networks within your AWS account. Although advanced AWS users often adopt multi-VPC architectures, for many users, it’s not inaccurate to call a VPC “your data center in the cloud” and think of it as the network container for all your AWS resources. VPC networks can span all the availability zones within a specific AWS region. For each VPC, you have full control over whether the VPC is connected to the Internet, to private on-premises networks, or to other Amazon VPCs. Until you explicitly create these connections, instances in your VPC are able to communicate with other instances in the same VPC.
 
@@ -310,15 +301,17 @@ AWS VPN Cloudhub	Connects multiple remote networks to a central location in AWS 
 AWS Privatelink	Allows private connections from your VPC to AWS services, such as S3, many of which otherwise require outbound internet access
 A diagram of a virtual private cloud (VPC) labeled example VPC with an IP range of 10.0.0.0/16. It includes three availability zones labeled A, B, and C within the VPC structure.
 
-FIGURE 2.10 Amazon VPC overview
+![FIGURE 2.10 Amazon VPC overview](./assets/fig210.png)
 
 For an example of an Amazon VPC with a connection to an Internet gateway and a VPN connection to an on-premises network provided by a virtual private gateway, see Figure 2.11.
 A diagram of a virtual private cloud (VPC) setup. Shows connections to an internet gateway and a corporate data center via VPN.
 
-FIGURE 2.11 Amazon VPC with gateway connections
-IP Addresses
+![FIGURE 2.11 Amazon VPC with gateway connections](./assets/fig210.png)
+
+## IP Addresses
 
 When working with Amazon VPC, all instances placed within a particular VPC are assigned one or more IP addresses. Several types of IP addresses are available for use with Amazon VPC.
+
 Private IP Addresses
 
 Private IP addresses are IPv4 addresses that are not reachable from the Internet. These addresses are unique within a VPC and used for traffic that is to be routed internally within the VPC, for private communication with connected networks, or for private communication with other VPCs.
@@ -356,6 +349,7 @@ The second type of configuration is usually a subnet that backend instances use 
 
 For an example of an Amazon VPC with a public and a private subnet, see Figure 2.12.
 A diagram of an example VPC with IP range 10.0.0.0/16, featuring two public subnets. It includes instances with private and public IPs, connected to an internet gateway for external access.
+
 
 FIGURE 2.12 Amazon VPC with public and private subnets
 
