@@ -16,6 +16,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     tar \
     git \
+    vim \
+    nano \
     wget \
     ca-certificates \
     gcc \
