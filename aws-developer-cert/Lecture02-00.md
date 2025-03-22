@@ -383,7 +383,7 @@ A diagram of an example VPC with a public subnet and private subnet in availabil
 
 ![FIGURE 2.13 Amazon VPC with public and private subnets](./assets/fig213.png)
 
-Security Groups
+### Security Groups
 
 Security groups act as a stateful firewall for resources in your AWS account, from EC2 instances to RDS databases to application load balancers. When you define security group rules, you specify the source or destination of the network traffic along with the protocols and ports that you allow from those sources.
 
@@ -402,26 +402,35 @@ For databasesg, you write an inbound rule that allows incoming traffic on TCP po
 To view the diagram of the security groups and rules for this scenario, see Figure 2.14. Also, see Table 2.5, Table 2.6, Table 2.7, and Table 2.8 for the corresponding inbound and outbound rules for these security groups.
 A diagram showing interactions between an admin, internet users, a web server instance, and a database server instance. The Admin connects via SSH, while internet users send web requests, and the web server makes SQL requests to the database server.
 
-FIGURE 2.14 Security groups
+![FIGURE 2.14 Amazon VPC with public and private subnets](./assets/fig214.png)
 
-TABLE 2.5 Inbound rules for websg
-Protocol	Port	Source	Comments
-TCP	80	0.0.0.0/0	Allow incoming HTTP requests from Internet users
-TCP	443	0.0.0.0/0	Allow incoming HTTPS requests from Internet users
-TCP	22	10.10.0.6/32	Allow incoming SSH only from the administrator’s computer
+#### TABLE 2.5 Inbound rules for websg
 
-TABLE 2.6 Outbound rules for websg
-Protocol	Port	Destination	Comments
-All	All	0.0.0.0/0	Allow all outbound IPv4 traffic
+| **Protocol** | **Port** | **Source**     | **Comments**                                         |
+|--------------|----------|----------------|------------------------------------------------------|
+| TCP          | 80       | 0.0.0.0/0      | Allow incoming HTTP requests from Internet users     |
+| TCP          | 443      | 0.0.0.0/0      | Allow incoming HTTPS requests from Internet users    |
+| TCP          | 22       | 10.10.0.6/32   | Allow incoming SSH only from the administrator’s computer |
 
-TABLE 2.7 Inbound rules for databasesg
-Protocol	Port	Source	Comments
-TCP	3306	sg-123	Allow inbound SQL queries from the ID of websg
+####  TABLE 2.6 Outbound rules for websg
 
-TABLE 2.8 Outbound rules for databasesg
-Protocol	Port	Destination	Comments
-TCP	80	0.0.0.0/0	Allow all outbound HTTP for updates
-TCP	443	0.0.0.0/0	Allow outbound HTTPS requests for updates
+| **Protocol** | **Port** | **Destination** | **Comments**                        |
+|--------------|----------|------------------|-------------------------------------|
+| All          | All      | 0.0.0.0/0        | Allow all outbound IPv4 traffic     |
+
+
+#### TABLE 2.7 Inbound rules for databasesg
+| **Protocol** | **Port** | **Source** | **Comments**                                      |
+|--------------|----------|------------|---------------------------------------------------|
+| TCP          | 3306     | sg-123     | Allow inbound SQL queries from the ID of websg    |
+
+
+#### TABLE 2.8 Outbound rules for databasesg
+| **Protocol** | **Port** | **Destination** | **Comments**                                 |
+|--------------|----------|------------------|----------------------------------------------|
+| TCP          | 80       | 0.0.0.0/0        | Allow all outbound HTTP for updates          |
+| TCP          | 443      | 0.0.0.0/0        | Allow outbound HTTPS requests for updates    |
+
 
 Security groups only support rules to allow traffic. Therefore, if you assign multiple security groups to your instance, that instance receives the cumulative network traffic permissions allowed by all the security group rules.
 Network Access Control Lists
@@ -446,7 +455,9 @@ Rule number	Type	Protocol	Port range	Destination	Allow/deny
 
 Figure 2.15 shows an example of an Amazon VPC with security groups protecting Amazon EC2 instances and network ACLs protecting subnets.
 
+![FIGURE 2.15](./assets/fig215.png)
 Figure 2.16 shows the same Amazon VPC, represented in a different way to highlight the features that control network traffic within an Amazon VPC.
+![FIGURE 2.15](./assets/fig216.png)
 
 Table 2.11 summarizes key aspects of security groups and network ACLs.
 
@@ -482,31 +493,32 @@ You can monitor traffic within your Amazon VPC by enabling Amazon VPC Flow Logs,
 For each network session, Flow Logs capture metadata, such as the source, destination, protocol, port, packet count, byte count, and time interval. The log entry specifies whether the traffic was accepted or rejected. This information helps you debug the network configuration.
 A diagram of an example VPC showing a public subnet and private subnet in availability zone A, with associated route tables and NAT gateway.
 
-FIGURE 2.17 Example of Amazon VPC with NAT
-Managing Your Resources
+![FIGURE 2.17 Example of Amazon VPC with NAT](./assets/fig217.png)
+
+## Managing Your Resources
 
 As you’ve seen, AWS gives you plenty of tools to get started running your data center in the cloud—just enough to be dangerous, if you’re not careful! Let’s take a closer look at the division of responsibility between you and AWS that will help ensure you’re taking care of everything you need to run securely and efficiently.
-Shared Responsibility Model
+### Shared Responsibility Model
 
 The Shared Responsibility Model is AWS’s foundational framework for helping customers understand how security is handled in the cloud. In short, the Shared Responsibility Model says that AWS is responsible for the security of the cloud, while you are responsible for security in the cloud.
 A diagram of an example VPC with a public subnet A and private subnet A. It shows connections between a NAT gateway, internet gateway, and an instance, along with labeled interactions for data flow.
 
-FIGURE 2.18 NAT gateway in Amazon VPC
+![FIGURE 2.18 NAT gateway in Amazon VPC](./assets/fig218.png)
 
 Security of the cloud, AWS’s part, involves securing physical access to the underlying infrastructure, such as the AWS regions and availability zones, as well as restricting access to the servers, physical networks, and decommissioning of hardware that is no longer useful. As part of securing the cloud infrastructure, AWS is also responsible for maintaining the underlying software for each service provided.
 
 Security in the cloud is your responsibility. This includes making secure choices when configuring your infrastructure and developing your applications. These responsibilities can include configuring the relevant encryption options and configuring your firewall rules. Even though this is your responsibility, you can simplify this task by taking advantage of AWS tools for encryption, defining firewall rules, and managing access and authorization to your AWS resources. For a summary of AWS and customer responsibilities, see Figure 2.19.
 A diagram showing the shared responsibility model for cloud security between AWS and customers. Highlights customer responsibility for security ’in’ the cloud and AWS responsibility for security ’of’ the cloud.
 
-FIGURE 2.19 Shared responsibility security model
+![FIGURE 2.19 Shared responsibility security model](./assets/fig219.png)
 
 For example, with EC2, AWS is responsible for the software on the physical host machines up through the virtualization layer. Beyond that, it is your responsibility to ensure that the guest operating system and everything running on it is secured. Your responsibilities include, but are not limited to, the following tasks:
 
-    Making sure that any sensitive data is secured
-    Making sure that the operating system is patched regularly
-    Managing the operating system’s user accounts
-    Securing any applications that are installed on that instance
-    Controlling network access to and from the instance
+- Making sure that any sensitive data is secured
+- Making sure that the operating system is patched regularly
+- Managing the operating system’s user accounts
+- Securing any applications that are installed on that instance
+- Controlling network access to and from the instance
 
 AWS provides tools to help you manage these concerns. For example, use AWS Systems Manager to automate the patching of instances on your behalf. You can also use network controls, such as security groups, to restrict access to the instance. In the end, it is your responsibility to configure these features in a way that meets the security requirements for your specific application.
 Comparing Managed and Unmanaged Services
@@ -520,17 +532,18 @@ We explored how Amazon VPC enables your EC2 instances to be placed into isolated
 
 You saw how routing between subnets is configured using route tables and network ACLs, enabling you to define some subnets as public and others as private. Security groups act as a stateful firewall that protects individual traffic flows at an instance level.
 
-Don’t forget: The responsibility for keeping your instances secure is shared between AWS and you, the customer. AWS is responsible for securing access to the infrastructure and providing you with controls that you can use to secure your instances. As an AWS customer, you are responsible for configuring your resources in a way that is secure and that meets your application needs.
-Exam Essentials
+Don’t forget: **The responsibility for keeping your instances secure is shared between AWS and you, the customer. AWS is responsible for securing access to the infrastructure and providing you with controls that you can use to secure your instances. As an AWS customer, you are responsible for configuring your resources in a way that is secure and that meets your application needs.**
 
-    Know the basics of Amazon EC2, such as resource types, instance types, AMIs, and storage. Be familiar with launching and connecting to EC2 instances. Understand EC2 instance types and families. Be familiar with the purpose of an AMI in launching an instance. Understand the distinction between persistent and ephemeral storage related to a particular EC2 instance.
-    Know about user data, instance metadata, and credentials. Be familiar with using user data to customize the software by executing scripts on instances. Any scripts or code running on an instance can use the EC2 Metadata service to discover the instance configuration. Use IAM roles to provide AWS credentials automatically to code running on an EC2 instance.
-    Know how EC2 instances communicate within a VPC. Understand the relationship be-tween an EC2 instance and a VPC network. There may be exam questions that ask you to troubleshoot issues related to connecting to an EC2 instance. Be familiar with how VPCs enable communication between EC2 instances within the same VPC and isolates those instances from other VPCs. Recognize how route tables, network access control lists, and security groups control network traffic.
-    Know about public and private subnets. Within a VPC, you must be able to distinguish be-tween public and private subnets. Public subnets allow you to assign public IPv4 addresses to EC2 instances. By contrast, instances in a private subnet have only private IP addresses. The key distinction is that public subnets have a route table entry that forwards Internet-bound traffic to an Internet gateway. Private subnets do not have a direct route to the Internet. Instead, these subnets have a route that forwards Internet-bound traffic through a NAT gateway or NAT instance.
-    Know about security groups and network ACLs. Be familiar with security groups and network ACLs. Security groups are used with EC2 instances, acting as stateful firewalls. They provide only rules that allow traffic. In comparison, network ACLs allow traffic between subnets and are stateless. They can allow or deny specific types of traffic.
-    Know about responsibilities shared between you and AWS. Be familiar with the separation between AWS responsibility and your responsibility in securing cloud resources. AWS is responsible for providing secure building blocks up until the hypervisor layer for EC2 instances. This includes securing the physical facilities and machines and any hardware decommissioning. You are responsible for patching the guest operating system and applications. You are also responsible for configuring firewall rules, encryption, and access to the instance in a way that meets their requirements.
+### Exam Essentials
 
-Exercises
+- Know the basics of Amazon EC2, such as resource types, instance types, AMIs, and storage. Be familiar with launching and connecting to EC2 instances. - Understand EC2 instance types and families. Be familiar with the purpose of an AMI in launching an instance. Understand the distinction between persistent and ephemeral storage related to a particular EC2 instance.
+- Know about user data, instance metadata, and credentials. Be familiar with using user data to customize the software by executing scripts on instances. Any scripts or code running on an instance can use the EC2 Metadata service to discover the instance configuration. Use IAM roles to provide AWS credentials automatically to code running on an EC2 instance.
+- Know how EC2 instances communicate within a VPC. Understand the relationship be-tween an EC2 instance and a VPC network. There may be exam questions that ask you to troubleshoot issues related to connecting to an EC2 instance. Be familiar with how VPCs enable communication between EC2 instances within the same VPC and isolates those instances from other VPCs. Recognize how route tables, network access control lists, and security groups control network traffic.
+- Know about public and private subnets. Within a VPC, you must be able to distinguish be-tween public and private subnets. Public subnets allow you to assign public IPv4 addresses to EC2 instances. By contrast, instances in a private subnet have only private IP addresses. The key distinction is that public subnets have a route table entry that forwards Internet-bound traffic to an Internet gateway. Private subnets do not have a direct route to the Internet. Instead, these subnets have a route that forwards Internet-bound traffic through a NAT gateway or NAT instance.
+- Know about security groups and network ACLs. Be familiar with security groups and network ACLs. Security groups are used with EC2 instances, acting as stateful firewalls. They provide only rules that allow traffic. In comparison, network ACLs allow traffic between subnets and are stateless. They can allow or deny specific types of traffic.
+- Know about responsibilities shared between you and AWS. Be familiar with the separation between AWS responsibility and your responsibility in securing cloud resources. AWS is responsible for providing secure building blocks up until the hypervisor layer for EC2 instances. This includes securing the physical facilities and machines and any hardware decommissioning. You are responsible for patching the guest operating system and applications. You are also responsible for configuring firewall rules, encryption, and access to the instance in a way that meets their requirements.
+
+## Exercises
 
 These exercises provide hands-on experience with the fundamentals of working with EC2 and VPC configuration. You will create an isolated network in an AWS account and then launch EC2 instances into that network.
 
@@ -540,21 +553,22 @@ You can complete these exercises within the AWS Free Tier, provided that you fol
 
 
 The results from these exercises are used in a later chapter, so follow all the activities and directions exactly.
-EXERCISE 2.1
-Creating an Amazon EC2 Key Pair
+### EXERCISE 2.1
+
+#### Creating an Amazon EC2 Key Pair
 
 In this exercise, you’ll generate and save an Amazon EC2 key pair. You are responsible for saving the private key and using it when you want to connect to your Amazon EC2 instances.
 
-    Sign in to the AWS Management Console using the DevAdmin IAM user you created in Exercise 1.2.
-    To open the Amazon EC2 console, select Services ➢ Compute ➢ EC2.
-    Select Network & Security ➢ Key Pairs.
-    Click Create Key Pair.
-    For Key Pair Name, enter devassoc, and then click Create.
+- Sign in to the AWS Management Console using the DevAdmin IAM user you created in Exercise 1.2.
+- To open the Amazon EC2 console, select Services ➢ Compute ➢ EC2.
+- Select Network & Security ➢ Key Pairs.
+- Click Create Key Pair.
+- For Key Pair Name, enter devassoc, and then click Create.
 
     The key pair automatically downloads to your Downloads folder.
     Move this key to a safe location on your computer. You need it to connect to your Amazon EC2 instances using Secure Shell (SSH) or Remote Desktop Protocol (RDP).
 
-EXERCISE 2.2
+### EXERCISE 2.2
 Creating an Amazon VPC with Public and Private Subnets
 
 In this exercise, you’ll create a virtual private cloud (VPC). Within that Amazon VPC, you will have a public subnet directly connected to the Internet through an Internet gateway. You will also have a private subnet that only has an indirect connection to the Internet using network address translation (NAT).
