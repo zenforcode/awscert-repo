@@ -1,53 +1,74 @@
 # AWS CLI commands cheatsheet
+# ✅ AWS CLI IAM Commands Guide
 
-## General
-To start using AWS CLI prefix command with `aws`.
-To display help:
 ```bash
+# To display help for AWS CLI
 aws help
-```
 
-To configure user, including the region:
-```bash
+# To configure AWS CLI with credentials, region, and output format
 aws configure
 ```
 
-## IAM
-IAM is a web service that helps you securely control access to AWS resources. With IAM, you can manage permissions that control which AWS resources users can access.
-To display IAM information related to current user:
+---
+
+## 🔐 IAM (Identity and Access Management)
+
+IAM is a web service that helps you securely control access to AWS resources. With IAM, you can manage users, groups, roles, and their permissions.
+
+---
+
+### 👤 User Information
+
 ```bash
+# Get details of the current authenticated IAM user
 aws iam get-user
 ```
-To display user's IAM plicies:
+
+---
+
+### 📋 View IAM Policies
+
 ```bash
+# List policies attached to a specific user
 aws iam list-attached-user-policies --user-name <USER_NAME>
-```
-To display user's IAM policies as as table:
-```bash
+
+# Display attached policies in table format
 aws iam list-attached-user-policies --user-name <USER_NAME> --output table
+
+# List all available IAM policies
+aws iam list-policies
+
+# List policy names and ARNs (text or table format)
+aws iam list-policies --query 'Policies[*].[PolicyName, Arn]' --output text
+aws iam list-policies --query 'Policies[*].[PolicyName, Arn]' --output table
 ```
-To display aviable ARN policies:
+
+---
+
+### ➕ Attach / Detach IAM Policies
+
 ```bash
-aws iam list-policies 
-```
-To display policies as text or table:
-```bash
-aws iam list-policies --query 'Policies[*].[PolicyName, Arn]' (--output text | table)
-```
-To attach a new plicy to a user:
-```bash
+# Attach a policy to a user
 aws iam attach-user-policy --user-name <USER_NAME> --policy-arn <POLICY_ARN>
-```
-Where `<POLICY_ARN>` looks like: `arn:aws:iam::<ARN_NUMBER>:policy/<POLICY_NAME>`
-To detach a policy from a user:
-```bash
+
+# Detach a policy from a user
 aws iam detach-user-policy --user-name <USER_NAME> --policy-arn <POLICY_ARN>
+
+# Example of POLICY_ARN format:
+# arn:aws:iam::<ACCOUNT_ID>:policy/<POLICY_NAME>
 ```
-To create a new policy based on file:
+
+---
+
+### 🛠️ Create IAM Policies
+
 ```bash
+# Create a new policy from a JSON file
 aws iam create-policy --policy-name <POLICY_NAME> --policy-document file://<PATH_TO_FILE>
-```
-To create a new version of a policy based on a file:
-```bash
-aws iam create-policy-version --policy-arn <IAM_POLICY> --policy-document file://<PATH_TO_FILE> (optional --set-as-default)
+
+# Create a new version of an existing policy from a JSON file
+aws iam create-policy-version \
+  --policy-arn <POLICY_ARN> \
+  --policy-document file://<PATH_TO_FILE> \
+  [--set-as-default]
 ```
