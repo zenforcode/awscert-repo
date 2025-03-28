@@ -56,6 +56,13 @@ aws iam detach-user-policy --user-name <USER_NAME> --policy-arn <POLICY_ARN>
 
 # Example of POLICY_ARN format:
 # arn:aws:iam::<ACCOUNT_ID>:policy/<POLICY_NAME>
+
+```bash
+# Attach policy to a group:
+aws iam attach-group-policy --group-name <group-name> --policy-arn <POLICY_ARN>
+
+# Detach a policy from a group:
+aws iam detach-group-policy --group-name Testers --policy-arn <POLICY_ARN>
 ```
 
 ---
